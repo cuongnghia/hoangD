@@ -1,0 +1,1444 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>hoangD • Profile</title>
+  <style>
+    :root{
+      --bg1:#050816;
+      --bg2:#0b1020;
+      --card: rgba(255,255,255,.08);
+      --card2: rgba(255,255,255,.12);
+      --stroke: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --muted2: rgba(255,255,255,.55);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --shadow2: 0 12px 30px rgba(0,0,0,.35);
+      --radius: 22px;
+      --r2: 16px;
+      --acc1:#7c3aed;
+      --acc2:#22d3ee;
+      --acc3:#f97316;
+      --good:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --focus: 0 0 0 4px rgba(34,211,238,.18);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    [data-theme="light"]{
+      --bg1:#f6f8ff;
+      --bg2:#eef2ff;
+      --card: rgba(0,0,0,.05);
+      --card2: rgba(0,0,0,.075);
+      --stroke: rgba(0,0,0,.10);
+      --text: rgba(0,0,0,.86);
+      --muted: rgba(0,0,0,.62);
+      --muted2: rgba(0,0,0,.50);
+      --shadow: 0 18px 45px rgba(0,0,0,.12);
+      --shadow2: 0 10px 26px rgba(0,0,0,.10);
+      --focus: 0 0 0 4px rgba(124,58,237,.16);
+    }
+
+    /* --- Accent variants (for "Đổi màu chút cho vui") --- */
+    :root[data-acc="a"]{ --acc1:#7c3aed; --acc2:#22d3ee; --acc3:#f97316; }
+    :root[data-acc="b"]{ --acc1:#06b6d4; --acc2:#a78bfa; --acc3:#fb7185; }
+    :root[data-acc="c"]{ --acc1:#22c55e; --acc2:#f59e0b; --acc3:#60a5fa; }
+    :root[data-acc="d"]{ --acc1:#f97316; --acc2:#22c55e; --acc3:#a78bfa; }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 15% 15%, color-mix(in oklab, var(--acc1) 25%, transparent), transparent 55%),
+        radial-gradient(900px 700px at 85% 20%, color-mix(in oklab, var(--acc2) 23%, transparent), transparent 52%),
+        radial-gradient(1000px 650px at 60% 85%, color-mix(in oklab, var(--acc3) 18%, transparent), transparent 56%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    .noise{
+      pointer-events:none;
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity:.28;
+      transform: translateZ(0);
+      animation: floatNoise 8s linear infinite;
+    }
+    @keyframes floatNoise{ from{ transform:translate3d(0,0,0);} to{ transform:translate3d(-2%, -2%, 0);} }
+
+    a{ color:inherit; text-decoration:none; }
+    button, input, textarea{ font: inherit; color:inherit; background:none; border:none; outline:none; }
+
+    .container{ width:min(1180px, 92vw); margin: 0 auto; padding: 22px 0 80px; }
+
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(0,0,0,.35), transparent);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    [data-theme="light"] .topbar{
+      background: linear-gradient(to bottom, rgba(255,255,255,.65), transparent);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .topbar-inner{
+      width:min(1180px, 92vw);
+      margin:0 auto; padding:14px 0;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+
+    .brand{ display:flex; align-items:center; gap:12px; user-select:none; }
+    .logo{
+      width:42px; height:42px; border-radius:14px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.7), transparent 60%),
+        conic-gradient(from 220deg, var(--acc1), var(--acc2), var(--acc3), var(--acc1));
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.22);
+      overflow:hidden;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .logo img{ width:100%; height:100%; object-fit: cover; display:none; }
+    .logo .fallback{ font-weight:900; font-size:12px; letter-spacing:.4px; opacity:.9; }
+    [data-theme="light"] .logo{ border:1px solid rgba(0,0,0,.12); }
+
+    .brand .t1{ font-weight:800; letter-spacing:.2px; }
+    .brand .t2{ font-size:12px; color:var(--muted); margin-top:2px; }
+
+    .nav{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 12px 24px rgba(0,0,0,.10);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      cursor:pointer;
+    }
+    [data-theme="light"] .chip{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+    .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.16); }
+    [data-theme="light"] .chip:hover{ background: rgba(0,0,0,.06); border-color: rgba(0,0,0,.12); }
+    .chip:focus-visible{ box-shadow: var(--focus); }
+
+    .grid{ display:grid; grid-template-columns: 1.15fr .85fr; gap:18px; margin-top:18px; }
+    @media (max-width: 960px){ .grid{ grid-template-columns: 1fr; } }
+
+    .card{
+      position:relative;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      transform: translate3d(0,0,0);
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+      will-change: transform;
+    }
+    [data-theme="light"] .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.52));
+      border: 1px solid rgba(0,0,0,.10);
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(420px 220px at 25% 15%, color-mix(in oklab, var(--acc1) 20%, transparent), transparent 60%),
+        radial-gradient(420px 220px at 75% 20%, color-mix(in oklab, var(--acc2) 18%, transparent), transparent 62%),
+        radial-gradient(480px 260px at 50% 110%, color-mix(in oklab, var(--acc3) 12%, transparent), transparent 60%);
+      opacity:.65;
+      pointer-events:none;
+    }
+    .card > .inner{ position:relative; padding:18px; }
+
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      margin-bottom:12px;
+    }
+    .section-title h2{ margin:0; font-size: 18px; letter-spacing:.2px; }
+    .section-title .meta{ font-size:12px; color: var(--muted2); }
+
+    .hero{ display:flex; gap:16px; align-items:center; }
+
+    .avatar{
+      width:78px; height:78px; border-radius: 26px;
+      background:
+        radial-gradient(16px 16px at 25% 22%, rgba(255,255,255,.7), transparent 60%),
+        radial-gradient(120px 100px at 70% 75%, rgba(34,211,238,.22), transparent 55%),
+        linear-gradient(145deg, color-mix(in oklab, var(--acc1) 95%, #000), color-mix(in oklab, var(--acc3) 75%, #000));
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 16px 35px rgba(0,0,0,.25);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900;
+      user-select:none;
+      overflow:hidden;
+      position:relative;
+    }
+    .avatar img{ width:100%; height:100%; object-fit: cover; display:none; }
+    .avatar .fallback{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:22px; }
+    [data-theme="light"] .avatar{ border:1px solid rgba(0,0,0,.10); }
+
+    .hero .name{ font-size: 28px; font-weight: 900; margin:0; line-height:1.05; }
+    .hero .desc{ margin:6px 0 0; color: var(--muted); }
+
+    .badges{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .badge{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    [data-theme="light"] .badge{ background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.08); }
+
+    .row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:11px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.13);
+      cursor:pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      user-select:none;
+    }
+    [data-theme="light"] .btn{ background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.10); }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.2); background: rgba(255,255,255,.11); }
+    [data-theme="light"] .btn:hover{ border-color: rgba(0,0,0,.16); background: rgba(0,0,0,.06); }
+    .btn:focus-visible{ box-shadow: var(--focus); }
+    .btn.primary{
+      background: linear-gradient(135deg, color-mix(in oklab, var(--acc1) 95%, #000), color-mix(in oklab, var(--acc2) 85%, #000));
+      border: 1px solid rgba(255,255,255,.22);
+      color: white;
+    }
+    .btn.primary:hover{ transform: translateY(-1px) scale(1.01); }
+    .btn .ico{ width:18px; height:18px; display:inline-block; border-radius: 6px; background: rgba(255,255,255,.18); }
+
+    .stats{ display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-top:14px; }
+    @media (max-width:520px){ .stats{ grid-template-columns: 1fr; } }
+    .stat{
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      padding:12px;
+      box-shadow: var(--shadow2);
+      min-height:78px;
+    }
+    [data-theme="light"] .stat{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+    .stat .n{ font-size:20px; font-weight:900; }
+    .stat .l{ color:var(--muted); font-size:12px; margin-top:2px; }
+
+    .tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .tab{
+      padding:9px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+      font-size:13px;
+      transition: .18s ease;
+    }
+    [data-theme="light"] .tab{ border:1px solid rgba(0,0,0,.09); background: rgba(0,0,0,.04); }
+    .tab[aria-selected="true"]{
+      background: rgba(34,211,238,.15);
+      border-color: rgba(34,211,238,.35);
+    }
+    [data-theme="light"] .tab[aria-selected="true"]{
+      background: rgba(124,58,237,.13);
+      border-color: rgba(124,58,237,.25);
+    }
+
+    .panel{ display:none; margin-top:12px; }
+    .panel.active{ display:block; }
+
+    .skills{ display:grid; gap:10px; }
+    .skill{
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      padding:12px;
+    }
+    [data-theme="light"] .skill{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+    .skill .top{ display:flex; justify-content:space-between; gap:10px; }
+    .skill .top b{ font-weight:800; }
+    .bar{
+      height:10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      margin-top:10px;
+      overflow:hidden;
+    }
+    [data-theme="light"] .bar{ background: rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.08); }
+    .bar > i{
+      display:block; height:100%;
+      width: var(--w, 50%);
+      background: linear-gradient(90deg, color-mix(in oklab, var(--acc1) 95%, #000), color-mix(in oklab, var(--acc2) 85%, #000), color-mix(in oklab, var(--acc3) 80%, #000));
+      border-radius: 999px;
+      transform-origin:left;
+      animation: grow .9s ease forwards;
+    }
+    @keyframes grow{ from{ transform:scaleX(.2); opacity:.65;} to{ transform:scaleX(1); opacity:1;} }
+
+    .projects{ display:grid; gap:10px; }
+    .project{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease;
+    }
+    [data-theme="light"] .project{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+    .project:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.16); }
+    [data-theme="light"] .project:hover{ background: rgba(0,0,0,.06); border-color: rgba(0,0,0,.12); }
+
+    .picon{
+      width:40px; height:40px; border-radius: 14px;
+      background: radial-gradient(14px 14px at 30% 30%, rgba(255,255,255,.7), transparent 60%),
+                  linear-gradient(135deg, color-mix(in oklab, var(--acc2) 80%, #000), color-mix(in oklab, var(--acc1) 85%, #000));
+      border:1px solid rgba(255,255,255,.16);
+      flex:0 0 auto;
+    }
+    [data-theme="light"] .picon{ border:1px solid rgba(0,0,0,.10); }
+
+    .project h3{ margin:0; font-size:14px; font-weight:900; }
+    .project p{ margin:6px 0 0; color:var(--muted); font-size:12px; line-height:1.35; }
+    .tags{ display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+    .tag{
+      font-size:11px;
+      padding:6px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+    }
+    [data-theme="light"] .tag{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+
+    .prog{ margin-top:10px; display:flex; align-items:center; gap:10px; }
+    .prog .pbar{
+      flex:1; height:9px; border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+    }
+    [data-theme="light"] .prog .pbar{ background: rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.08); }
+    .prog .pbar i{
+      display:block; height:100%;
+      width: var(--pw, 50%);
+      background: linear-gradient(90deg, color-mix(in oklab, var(--acc2) 90%, #000), color-mix(in oklab, var(--acc1) 85%, #000));
+      border-radius:999px;
+    }
+    .prog .pct{ font: 12px var(--mono); color: var(--muted2); white-space:nowrap; }
+
+    .timeline{ display:grid; gap:10px; }
+    .titem{
+      padding:12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    [data-theme="light"] .titem{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+    .titem .when{ font: 12px var(--mono); color: var(--muted2); }
+    .titem .what{ margin-top:6px; font-weight:800; }
+    .titem .note{ margin-top:6px; color: var(--muted); font-size:12px; line-height:1.4; }
+
+    .mini{ display:grid; gap:14px; align-content:start; }
+
+    .search{
+      display:flex; gap:10px; align-items:center;
+      padding:12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    [data-theme="light"] .search{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+    .search input{ width:100%; font-size:13px; color: var(--text); }
+    .search input::placeholder{ color: var(--muted2); }
+
+    .kbd{
+      font: 11px var(--mono);
+      color: var(--muted2);
+      padding:6px 8px;
+      border-radius: 10px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      user-select:none;
+      white-space:nowrap;
+    }
+    [data-theme="light"] .kbd{ border:1px solid rgba(0,0,0,.10); background: rgba(0,0,0,.04); }
+
+    /* --- Quick search card background image layer --- */
+    .bgcard{
+      position:relative;
+      overflow:hidden;
+    }
+    .bgcard .bgimg{
+      position:absolute; inset:0;
+      background: none;
+      background-size: cover;
+      background-position: center;
+      filter: blur(10px) saturate(1.1);
+      transform: scale(1.06);
+      opacity: .55;
+      pointer-events:none;
+    }
+    [data-theme="light"] .bgcard .bgimg{
+      filter: blur(12px) saturate(1.05);
+      opacity:.45;
+    }
+    .bgcard .glass-inner{
+      position:relative;
+      border-radius: 18px;
+      background: rgba(0,0,0,.36);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(10px);
+      padding: 14px;
+    }
+    [data-theme="light"] .bgcard .glass-inner{
+      background: rgba(255,255,255,.76);
+      border:1px solid rgba(0,0,0,.10);
+    }
+
+    .socials{ display:grid; gap:10px; }
+    .social{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    [data-theme="light"] .social{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+    .social .left{ display:flex; align-items:center; gap:10px; min-width:0; }
+    .dot{
+      width:12px; height:12px; border-radius:999px;
+      background: linear-gradient(135deg, var(--acc2), var(--acc1));
+      box-shadow: 0 8px 18px rgba(34,211,238,.20);
+      flex:0 0 auto;
+    }
+    .social b{ font-size:13px; }
+    .social span{ font-size:12px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 220px; display:block; }
+    .social .actions{ display:flex; gap:8px; }
+
+    .music{
+      display:grid; gap:10px;
+      padding:12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    [data-theme="light"] .music{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+    .music .line{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .music .line small{ color:var(--muted2); }
+    .range{ width:100%; accent-color: var(--acc2); }
+    .tiny{ font-size:12px; color: var(--muted); line-height:1.35; }
+
+    .volchip{
+      font: 12px var(--mono);
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--muted2);
+      white-space:nowrap;
+      user-select:none;
+    }
+    [data-theme="light"] .volchip{ border:1px solid rgba(0,0,0,.10); background: rgba(0,0,0,.04); }
+
+    .form{
+      display:grid; gap:10px;
+      padding:12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    [data-theme="light"] .form{ background: rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.08); }
+    .field{ display:grid; gap:6px; }
+    .field label{ font-size:12px; color:var(--muted2); }
+    .field input, .field textarea{
+      padding:11px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size:13px;
+    }
+    [data-theme="light"] .field input, [data-theme="light"] .field textarea{
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(0,0,0,.10);
+    }
+    .field input:focus, .field textarea:focus{ box-shadow: var(--focus); }
+    .field textarea{ min-height: 92px; resize: vertical; }
+
+    .footer{
+      margin-top:18px;
+      padding:14px 18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.09);
+      color: var(--muted2);
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+    [data-theme="light"] .footer{ background: rgba(0,0,0,.03); border:1px solid rgba(0,0,0,.08); }
+    .footer code{ font: 12px var(--mono); }
+
+    .toasts{
+      position:fixed; right:14px; bottom:14px;
+      display:grid; gap:10px;
+      z-index: 80;
+      width: min(380px, 92vw);
+    }
+    .toast{
+      border-radius: 18px;
+      padding:12px;
+      background: rgba(0,0,0,.66);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow2);
+      animation: pop .18s ease;
+    }
+    [data-theme="light"] .toast{
+      background: rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.12);
+    }
+    @keyframes pop{ from{ transform:translateY(10px); opacity:0;} to{ transform:translateY(0); opacity:1;} }
+    .toast .t{ font-weight:800; }
+    .toast .d{ margin-top:4px; color:var(--muted); font-size:12px; line-height:1.35; }
+
+    /* Modal: make text clear (not transparent) */
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center; justify-content:center;
+      z-index: 90;
+      background: rgba(0,0,0,.62);
+      padding: 18px;
+    }
+    .modal.active{ display:flex; }
+    .modal-card{
+      width:min(820px, 96vw);
+      border-radius: 24px;
+      background: rgba(10, 12, 18, .94);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 30px 120px rgba(0,0,0,.55);
+      overflow:hidden;
+    }
+    [data-theme="light"] .modal-card{
+      background: rgba(255,255,255,.96);
+      border:1px solid rgba(0,0,0,.12);
+      box-shadow: 0 22px 75px rgba(0,0,0,.22);
+    }
+    .modal-card header{
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      padding:14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    [data-theme="light"] .modal-card header{ border-bottom: 1px solid rgba(0,0,0,.10); }
+    .modal-card header b{ font-size:14px; }
+    .modal-card .content{
+      padding:16px;
+      color: var(--text);
+      line-height:1.55;
+      font-size:13px;
+    }
+    .modal-card .content p{ color: var(--text); }
+    .modal-card .content li{ color: var(--text); opacity:.92; }
+    .modal-card .content ul{ margin:10px 0 0 18px; }
+    .closex{
+      width:38px; height:38px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      cursor:pointer;
+      transition: transform .16s ease;
+    }
+    [data-theme="light"] .closex{ border:1px solid rgba(0,0,0,.12); background: rgba(0,0,0,.04); }
+    .closex:hover{ transform: translateY(-1px); }
+
+    .fab{
+      position:fixed;
+      left:14px; bottom:14px;
+      z-index:70;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .fab button{
+      width:44px; height:44px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(12px);
+      cursor:pointer;
+      box-shadow: var(--shadow2);
+      transition: transform .16s ease, opacity .2s ease;
+    }
+    [data-theme="light"] .fab button{ background: rgba(255,255,255,.90); border:1px solid rgba(0,0,0,.12); }
+    .fab button:hover{ transform: translateY(-1px); }
+    .fab button[hidden]{ opacity:0; pointer-events:none; }
+
+    .sep{ height:1px; background: rgba(255,255,255,.10); margin: 12px 0; }
+    [data-theme="light"] .sep{ background: rgba(0,0,0,.08); }
+
+    .hint{
+      font: 12px var(--mono);
+      color: var(--muted2);
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:auto;
+      white-space:nowrap;
+    }
+    [data-theme="light"] .hint{ background: rgba(0,0,0,.03); border:1px solid rgba(0,0,0,.08); }
+
+    /* Smooth tilt hover - only for .tilt */
+    .tilt{ transform-style: preserve-3d; will-change: transform; }
+  </style>
+</head>
+
+<body data-theme="dark">
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- ==========================================================
+    ✅ KHU RIÊNG DÁN LINK (GIỮ NGUYÊN: nhạc + ảnh Discord)
+    - MUSIC_URL: link nhạc
+    - AVATAR_IMG_URL: ảnh ô vuông avatar (to)
+    - LOGO_IMG_URL: ảnh ô vuông logo (nhỏ topbar)
+    - QUICK_BG_IMG_URL: ảnh nền full khối "Tìm nhanh" (blur để nổi chữ)
+  =========================================================== -->
+  <script>
+    const MUSIC_URL =
+      "https://cdn.discordapp.com/attachments/1453075701006733403/1453090721312673833/CHO_ANH_VE.mp3?ex=694c2fb1&is=694ade31&hm=27b2805b56257a19073c726990e8913413a86ec74bea7a3e0994efff8ed3d26c";
+    const TRY_AUTOPLAY_ON_LOAD = true;
+
+    const AVATAR_IMG_URL   = "https://cdn.discordapp.com/avatars/1255473380455612547/1bd527f1489cc0561128918a0874815a.png?size=1024";
+    const LOGO_IMG_URL     = "https://cdn.discordapp.com/attachments/1314954797106987019/1453101071147729130/keostore.png?ex=694c3954&is=694ae7d4&hm=439923e948e8cb1187615cedebc21ebda0edd6c30074f5a8be2ae9124725380b&";
+
+    // 👇 ảnh nền cho khối "Tìm nhanh" (sẽ blur để chữ rõ)
+    const QUICK_BG_IMG_URL = "https://cdn.discordapp.com/banners/1255473380455612547/a_77c451e4ecc1e7bcb78c70dddacb1cba.gif?size=512";
+  </script>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true" id="logoBox">
+          <img id="logoImg" alt="logo" />
+          <div class="fallback" id="logoFallback">HD</div>
+        </div>
+        <div>
+          <div class="t1">hoangD</div>
+          <div class="t2" id="subline">một góc nhỏ để giới thiệu bản thân (nhẹ nhàng thôi)</div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <a class="chip" href="#about">Giới thiệu</a>
+        <a class="chip" href="#skills">Kỹ năng</a>
+        <a class="chip" href="#projects">Dự án</a>
+        <a class="chip" href="#contact">Liên hệ</a>
+
+        <button class="chip" id="btnTheme" type="button" title="Đổi theme (T)">
+          🌗 <span style="font-size:12px;color:var(--muted)">Theme</span>
+        </button>
+        <button class="chip" id="btnMusic" type="button" title="Bật/Tắt nhạc (M)">
+          🎵 <span style="font-size:12px;color:var(--muted)">Music</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+      <!-- LEFT -->
+      <section class="card tilt" id="about">
+        <div class="inner">
+          <div class="hero">
+            <div class="avatar" id="avatarBox">
+              <img id="avatarImg" alt="avatar" />
+              <div class="fallback" id="avatarFallback">HD</div>
+            </div>
+
+            <div style="min-width:0">
+              <h1 class="name" id="name">hoangD</h1>
+              <p class="desc" id="headline">CĐ Giao thông Vận tải • thích Minecraft • nghe nhạc chill</p>
+
+              <div class="badges" id="badges">
+                <span class="badge">🎂 28/07</span>
+                <span class="badge">🙂 hòa đồng, dễ gần</span>
+                <span class="badge">🍖 mê sườn</span>
+                <span class="badge">🎮 Minecraft</span>
+              </div>
+
+              <div class="row">
+                <button class="btn primary" id="btnCopyProfile" type="button">
+                  <span class="ico"></span> Copy link trang này
+                </button>
+                <button class="btn" id="btnOpenModal" type="button">
+                  <span class="ico"></span> Thông tin thêm
+                </button>
+                <button class="btn" id="btnRandomize" type="button">
+                  <span class="ico"></span> Đổi màu nhẹ
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="n" id="stat1">2</div>
+              <div class="l">việc đang làm</div>
+            </div>
+            <div class="stat">
+              <div class="n" id="stat2">Chill</div>
+              <div class="l">đang nghe</div>
+            </div>
+            <div class="stat">
+              <div class="n" id="stat3">MC</div>
+              <div class="l">hay chơi</div>
+            </div>
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="section-title">
+            <h2>Góc chính</h2>
+            <div class="meta">
+              Phím tắt: <span class="kbd">T</span> theme • <span class="kbd">M</span> music • <span class="kbd">/</span> tìm
+            </div>
+          </div>
+
+          <div class="tabs" role="tablist" aria-label="Dashboard tabs">
+            <button class="tab" role="tab" aria-selected="true" data-tab="skills">Kỹ năng</button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="projects">Dự án</button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="timeline">Nói nhanh</button>
+          </div>
+
+          <div class="panel active" id="panel-skills">
+            <div class="skills" id="skills">
+              <div class="skill">
+                <div class="top"><b>Chém gió / buôn chuyện</b><span style="color:var(--muted2)">97%</span></div>
+                <div class="bar"><i style="--w:97%"></i></div>
+              </div>
+              <div class="skill">
+                <div class="top"><b>Sửa máy (đủ điểm lên lớp)</b><span style="color:var(--muted2)">76%</span></div>
+                <div class="bar"><i style="--w:76%"></i></div>
+              </div>
+              <div class="skill">
+                <div class="top"><b>Múa quạt</b><span style="color:var(--muted2)">84%</span></div>
+                <div class="bar"><i style="--w:84%"></i></div>
+              </div>
+              <div class="skill">
+                <div class="top"><b>Nhảy Alibaba</b><span style="color:var(--muted2)">88%</span></div>
+                <div class="bar"><i style="--w:88%"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" id="panel-projects">
+            <div class="projects" id="projects">
+              <div class="project tilt" data-project="0" role="button" tabindex="0">
+                <div class="picon" aria-hidden="true"></div>
+                <div style="min-width:0">
+                  <h3>Plugin TuChanGioi</h3>
+                  <p>Làm dần dần cho chắc. Ưu tiên chạy ổn trước, đẹp tính sau.</p>
+                  <div class="tags">
+                    <span class="tag">Minecraft</span><span class="tag">Plugin</span><span class="tag">Paper/Spigot</span>
+                  </div>
+                  <div class="prog">
+                    <div class="pbar"><i style="--pw:50%"></i></div>
+                    <div class="pct">50%</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project tilt" data-project="1" role="button" tabindex="0">
+                <div class="picon" aria-hidden="true" style="background:linear-gradient(135deg, rgba(249,115,22,.85), rgba(34,211,238,.75));"></div>
+                <div style="min-width:0">
+                  <h3>Xây 1 store đông khách</h3>
+                  <p>Chia việc ra làm từng phần: cái nào gọn gàng là triển luôn.</p>
+                  <div class="tags">
+                    <span class="tag">Store</span><span class="tag">Vận hành</span><span class="tag">Thực tế</span>
+                  </div>
+                  <div class="prog">
+                    <div class="pbar"><i style="--pw:40%"></i></div>
+                    <div class="pct">40%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" id="panel-timeline">
+            <div class="timeline">
+              <div class="titem">
+                <div class="when">Học</div>
+                <div class="what">Cao đẳng Giao thông Vận tải</div>
+                <div class="note">Học để chắc nền, làm để có kinh nghiệm.</div>
+              </div>
+              <div class="titem">
+                <div class="when">Tính cách</div>
+                <div class="what">Hòa đồng, dễ gần</div>
+                <div class="note">Gặp đúng người đúng chuyện là nói hoài 😄</div>
+              </div>
+              <div class="titem">
+                <div class="when">Gu</div>
+                <div class="what">Minecraft + nhạc chill</div>
+                <div class="note">Rảnh vào game, bận thì bật nhạc cho nhẹ đầu.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- RIGHT -->
+      <aside class="mini">
+
+        <!-- Quick Search: add background image layer + inner blur card for readability -->
+        <section class="card bgcard" id="quickCard">
+          <div class="bgimg" id="quickBg"></div>
+          <div class="inner">
+            <div class="glass-inner">
+              <div class="section-title">
+                <h2>Tìm nhanh</h2>
+                <div class="meta"><span class="kbd">/</span></div>
+              </div>
+              <div class="search">
+                <span class="kbd">⌕</span>
+                <input id="searchInput" type="text" placeholder="Tìm: dự án, tag..." autocomplete="off" />
+                <span class="kbd">ESC</span>
+              </div>
+              <div class="tiny" style="margin-top:10px">
+                Click vào để tìm nhanh <b>Dự án</b>. nhé.
+              </div>
+
+              <div class="sep" style="margin:12px 0 10px"></div>
+
+              <div class="tiny">
+                <b>Tìm kiếm</b>: tìm nhanh các dự án của <span class="kbd">hoangD</span> nhé.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="musicBox">
+          <div class="inner">
+            <div class="section-title">
+              <h2>Music</h2>
+              <div class="meta" id="musicState">loading…</div>
+            </div>
+
+            <div class="music">
+              <div class="line">
+                <b>Nhạc đang bật</b>
+                <button class="btn" id="btnPlay" type="button" style="padding:9px 12px;border-radius:14px;">▶ Play</button>
+              </div>
+
+              <div class="line" style="gap:12px">
+                <small>Âm lượng</small>
+                <input class="range" id="vol" type="range" min="0" max="1" step="0.01" value="0.65" />
+                <span class="volchip" id="volPct">65%</span>
+              </div>
+
+              <div class="line">
+                <small>Loop</small>
+                <button class="btn" id="btnLoop" type="button" style="padding:9px 12px;border-radius:14px;">🔁 ON</button>
+              </div>
+
+              <div class="tiny">
+                Bấm <b>Play</b> 1 lần là chạy.
+              </div>
+
+              <div class="hint" id="musicHint">MUSIC_URL = …</div>
+            </div>
+
+            <audio id="audio" preload="auto"></audio>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="inner">
+            <div class="section-title">
+              <h2>Social</h2>
+              <div class="meta">copy nhanh</div>
+            </div>
+
+            <div class="socials" id="socials">
+              <div class="social">
+                <div class="left">
+                  <div class="dot" aria-hidden="true"></div>
+                  <div style="min-width:0">
+                    <b>Discord</b>
+                    <span id="discordTag">_hoagd</span>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="btn" data-copy="#discordTag" type="button" style="padding:9px 12px;">Copy</button>
+                </div>
+              </div>
+
+              <div class="social">
+                <div class="left">
+                  <div class="dot" aria-hidden="true" style="background:linear-gradient(135deg, var(--acc3), var(--acc2));"></div>
+                  <div style="min-width:0">
+                    <b>Facebook</b>
+                    <span id="fbLink">HoangNghia</span>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="btn" data-copy="#fbLink" type="button" style="padding:9px 12px;">Copy</button>
+                </div>
+              </div>
+
+              <div class="social">
+                <div class="left">
+                  <div class="dot" aria-hidden="true" style="background:linear-gradient(135deg, var(--acc1), var(--acc3));"></div>
+                  <div style="min-width:0">
+                    <b>GitHub</b>
+                    <span id="ghLink">Không có</span>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="btn" data-copy="#ghLink" type="button" style="padding:9px 12px;">Copy</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tiny" style="margin-top:10px">
+              Các mạng xã hội của tui.
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="contact">
+          <div class="inner">
+            <div class="section-title">
+              <h2>Liên hệ</h2>
+              <div class="meta">email</div>
+            </div>
+
+            <form class="form" id="contactForm">
+              <div class="field">
+                <label for="cname">Tên</label>
+                <input id="cname" required placeholder="Bạn tên gì?" />
+              </div>
+              <div class="field">
+                <label for="cmsg">Tin nhắn</label>
+                <textarea id="cmsg" required placeholder="Nhắn gì cũng được (ngắn gọn thôi nha)"></textarea>
+              </div>
+              <button class="btn primary" type="submit" style="border-radius:18px;">
+                <span class="ico"></span> Gửi)
+              </button>
+
+              <div class="tiny">
+                Liên hệ chính: <b id="mail">cuongnghia122@gmail.com</b>
+                <button class="btn" type="button" id="copyMail" style="padding:8px 10px;border-radius:14px;margin-left:8px;">Copy</button>
+              </div>
+              <div class="tiny">Nhận làm dịch vụ tại store.</div>
+            </form>
+          </div>
+        </section>
+
+      </aside>
+    </div>
+
+    <div class="footer">
+      <div>© <span id="year"></span> • <b id="footerName">hoangD</b> • <span style="color:var(--muted)">profile</span></div>
+      <div><code id="buildInfo">hilo</code></div>
+    </div>
+  </div>
+
+  <div class="fab" aria-hidden="false">
+    <button id="btnTop" type="button" title="Lên đầu trang">↑</button>
+    <button id="btnHelp" type="button" title="Ghi chú">?</button>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <header>
+        <b id="modalTitle">Chi tiết</b>
+        <button class="closex" id="modalClose" type="button" aria-label="Đóng">✕</button>
+      </header>
+      <div class="content" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Utilities =====
+    const $ = (q, el=document) => el.querySelector(q);
+    const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
+
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // Toast system (support update to avoid spam)
+    function toast(title, desc="", type="info", opts={}){
+      const box = $("#toasts");
+      const { id=null, ttl=3400 } = opts;
+      const icon = type === "ok" ? "✅" : type === "warn" ? "⚠️" : type === "bad" ? "⛔" : "ℹ️";
+
+      let div = id ? document.getElementById(id) : null;
+      const isNew = !div;
+
+      if(!div){
+        div = document.createElement("div");
+        div.className = "toast";
+        if(id) div.id = id;
+        box.appendChild(div);
+      }
+
+      div.innerHTML = `<div class="t">${icon} ${escapeHtml(title)}</div><div class="d">${escapeHtml(desc)}</div>`;
+      div.style.opacity = "1";
+
+      clearTimeout(div.__hide1);
+      clearTimeout(div.__hide2);
+      div.__hide1 = setTimeout(() => { div.style.opacity = "0"; }, ttl);
+      div.__hide2 = setTimeout(() => { div.remove(); }, ttl + 350);
+
+      if(isNew){ /* pop handled by CSS */ }
+      return div;
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("Đã copy", text.length > 52 ? text.slice(0,52)+"…" : text, "ok");
+      }catch{
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        toast("Đã copy", "(fallback)", "ok");
+      }
+    }
+
+    // ===== Theme =====
+    const themeKey = "profile_theme";
+    function setTheme(next){
+      document.body.setAttribute("data-theme", next);
+      localStorage.setItem(themeKey, next);
+      toast("Theme", next === "dark" ? "Tối" : "Sáng", "ok");
+    }
+    function toggleTheme(){
+      const cur = document.body.getAttribute("data-theme") || "dark";
+      setTheme(cur === "dark" ? "light" : "dark");
+    }
+
+    // ===== Accent cycle (Đổi màu nhẹ) =====
+    const accKey = "profile_acc";
+    const accList = ["a","b","c","d"];
+    function setAcc(v){
+      document.documentElement.setAttribute("data-acc", v);
+      localStorage.setItem(accKey, v);
+    }
+    function cycleAcc(){
+      const cur = document.documentElement.getAttribute("data-acc") || "a";
+      const idx = accList.indexOf(cur);
+      const next = accList[(idx + 1 + accList.length) % accList.length];
+      setAcc(next);
+      toast("Màu", "Đổi nhẹ một chút", "ok", { ttl: 1200 });
+    }
+
+    // ===== Tabs =====
+    function setTab(key){
+      $$(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.tab === key ? "true" : "false"));
+      $("#panel-skills").classList.toggle("active", key === "skills");
+      $("#panel-projects").classList.toggle("active", key === "projects");
+      $("#panel-timeline").classList.toggle("active", key === "timeline");
+    }
+
+    // ===== Modal =====
+    const PROJECTS = [
+      {
+        title:"Plugin TuChanGioi (50%)",
+        desc:"Làm tới đâu chắc tới đó: ưu tiên chạy ổn + dễ dùng. Phần nào xong thì đóng gói luôn cho gọn.",
+        bullets:[
+          "Minecraft plugin (Paper/Spigot)",
+          "Tập trung: ổn định + dễ chỉnh",
+          "Tiến độ hiện tại: 50%"
+        ]
+      },
+      {
+        title:"Xây 1 store đông khách (40%)",
+        desc:"Đang gom ý tưởng + chia hạng mục để làm từng phần. Mục tiêu: dễ vận hành, dễ scale.",
+        bullets:[
+          "Thiết kế luồng vận hành",
+          "Tối ưu trải nghiệm khách",
+          "Tiến độ hiện tại: 40%"
+        ]
+      }
+    ];
+
+    function openModal(title, html){
+      $("#modalTitle").textContent = title;
+      $("#modalBody").innerHTML = html;
+      $("#modal").classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal(){
+      $("#modal").classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    // ===== Smooth tilt hover (no rung) - only for .tilt elements =====
+    function enableTilt(el, cfg={}){
+      const max = cfg.max ?? 6;
+      const lift = cfg.lift ?? 2.5;
+      const ease = cfg.ease ?? 0.12;
+      const activeScale = cfg.scale ?? 1.01;
+
+      let tx=0, ty=0, cx=0, cy=0;
+      let raf = null;
+      let hovering = false;
+
+      function clamp(v,min,maxv){ return Math.max(min, Math.min(maxv, v)); }
+      function lerp(a,b,t){ return a + (b-a)*t; }
+
+      function loop(){
+        cx = lerp(cx, tx, ease);
+        cy = lerp(cy, ty, ease);
+
+        const rx = (-cy * max).toFixed(3);
+        const ry = ( cx * max).toFixed(3);
+        const z  = hovering ? lift : 0;
+        const sc = hovering ? activeScale : 1;
+
+        el.style.transform = `translate3d(0, ${-z}px, 0) rotateX(${rx}deg) rotateY(${ry}deg) scale(${sc})`;
+
+        if(Math.abs(cx-tx) < 0.001 && Math.abs(cy-ty) < 0.001 && !hovering){
+          raf = null;
+          return;
+        }
+        raf = requestAnimationFrame(loop);
+      }
+
+      function onMove(e){
+        const r = el.getBoundingClientRect();
+        const nx = (e.clientX - (r.left + r.width/2)) / (r.width/2);
+        const ny = (e.clientY - (r.top + r.height/2)) / (r.height/2);
+        tx = clamp(nx, -1, 1);
+        ty = clamp(ny, -1, 1);
+        if(!raf) raf = requestAnimationFrame(loop);
+      }
+      function onEnter(){ hovering = true; if(!raf) raf = requestAnimationFrame(loop); }
+      function onLeave(){ hovering = false; tx = 0; ty = 0; if(!raf) raf = requestAnimationFrame(loop); }
+
+      el.addEventListener("mouseenter", onEnter);
+      el.addEventListener("mousemove", onMove);
+      el.addEventListener("mouseleave", onLeave);
+    }
+
+    // ===== Music =====
+    const audio = $("#audio");
+    const musicHint = $("#musicHint");
+    const musicState = $("#musicState");
+    const btnPlay = $("#btnPlay");
+    const btnLoop = $("#btnLoop");
+    const vol = $("#vol");
+    const volPct = $("#volPct");
+    const musicKey = "profile_music_on";
+
+    function setMusicHint(){
+      musicHint.textContent = `MUSIC_URL = ${MUSIC_URL}`;
+    }
+    function setMusicUi(){
+      const playing = !audio.paused && !audio.ended;
+      const on = localStorage.getItem(musicKey) !== "off";
+      $("#btnMusic").querySelector("span").textContent = on ? "Music" : "Muted";
+      btnPlay.textContent = playing ? "⏸ Pause" : "▶ Play";
+      musicState.textContent = playing ? "đang phát" : (on ? "sẵn sàng" : "đang tắt");
+    }
+    async function tryPlay(){
+      try{
+        await audio.play();
+        setMusicUi();
+        toast("Nhạc", "Đang chạy 🎧", "ok", { ttl: 1400 });
+      }catch{
+        setMusicUi();
+        toast("Nhạc", "Trình duyệt chặn tự phát — bấm Play 1 lần nhé.", "warn", { ttl: 1800 });
+      }
+    }
+    function pauseMusic(){ audio.pause(); setMusicUi(); }
+    function setMusicOn(on){
+      localStorage.setItem(musicKey, on ? "on" : "off");
+      if(!on) pauseMusic();
+      setMusicUi();
+    }
+
+    // ===== Search filter =====
+    function filterProjects(q){
+      q = q.trim().toLowerCase();
+      $$(".project").forEach(it => {
+        const text = it.innerText.toLowerCase();
+        it.style.display = (!q || text.includes(q)) ? "" : "none";
+      });
+    }
+
+    // ===== Images =====
+    function applyImage(imgEl, fallbackEl, url){
+      const ok = url && url.length > 10 && !url.includes("PASTE_");
+      if(!ok){
+        imgEl.style.display = "none";
+        fallbackEl.style.display = "flex";
+        return;
+      }
+      imgEl.src = url;
+      imgEl.onload = () => { imgEl.style.display = "block"; fallbackEl.style.display = "none"; };
+      imgEl.onerror = () => {
+        imgEl.style.display = "none";
+        fallbackEl.style.display = "flex";
+        toast("Ảnh", "Link ảnh không tải được (hoặc bị chặn).", "warn", { ttl: 1600 });
+      };
+    }
+    function applyBg(el, url){
+      const ok = url && url.length > 10 && !url.includes("PASTE_");
+      if(!ok){
+        el.style.backgroundImage = "none";
+        return;
+      }
+      el.style.backgroundImage = `url('${url}')`;
+    }
+
+    // ===== Init =====
+    (function init(){
+      // restore theme + accent
+      const savedTheme = localStorage.getItem(themeKey);
+      if(savedTheme === "light" || savedTheme === "dark") document.body.setAttribute("data-theme", savedTheme);
+
+      const savedAcc = localStorage.getItem(accKey) || "a";
+      setAcc(savedAcc);
+
+      $("#year").textContent = new Date().getFullYear();
+
+      // Tabs
+      $$(".tab").forEach(t => t.addEventListener("click", () => setTab(t.dataset.tab)));
+
+      // Tilt ONLY on: main about card + project items (smooth, no rung)
+      enableTilt($("#about"), { max: 5.0, lift: 3, ease: 0.10, scale: 1.01 });
+      $$(".project.tilt").forEach(p => enableTilt(p, { max: 4.8, lift: 2, ease: 0.12, scale: 1.01 }));
+
+      // Buttons
+      $("#btnTheme").addEventListener("click", toggleTheme);
+
+      // Rename & change content for "Xem thêm" and "?"
+      $("#btnOpenModal").addEventListener("click", () => {
+        const html = `
+          <p><b>hoangD</b></p>
+          <ul>
+            <li>🎂 28/07</li>
+            <li>🏫 Cao đẳng Giao thông Vận tải</li>
+            <li>🙂 Hòa đồng, dễ gần</li>
+            <li>🍖 Món khoái: sườn</li>
+            <li>🎮 Minecraft</li>
+            <li>🎧 Nhạc chill</li>
+            <li>📩 Email: cuongnghia122@gmail.com</li>
+          </ul>
+          <p style="margin-top:10px;color:var(--muted)">
+          </p>
+        `;
+        openModal("Thông tin thêm", html);
+      });
+
+      $("#btnRandomize").addEventListener("click", cycleAcc);
+
+      $("#btnCopyProfile").addEventListener("click", () => copyText(location.href));
+
+      // Project modal
+      $$(".project").forEach(p => {
+        const open = () => {
+          const idx = Number(p.dataset.project);
+          const data = PROJECTS[idx] || {title:"Dự án", desc:"", bullets:[]};
+          const html = `
+            <p>${escapeHtml(data.desc)}</p>
+            <ul>${data.bullets.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
+            <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn primary" type="button" id="modalCopyTitle"><span class="ico"></span> Copy tên</button>
+              <button class="btn" type="button" id="modalCopyAll"><span class="ico"></span> Copy nội dung</button>
+            </div>
+          `;
+          openModal(data.title, html);
+          setTimeout(() => {
+            const t = data.title;
+            const all = `${data.title}\n${data.desc}\n- ${data.bullets.join("\n- ")}`;
+            $("#modalCopyTitle")?.addEventListener("click", () => copyText(t));
+            $("#modalCopyAll")?.addEventListener("click", () => copyText(all));
+          }, 0);
+        };
+        p.addEventListener("click", open);
+        p.addEventListener("keydown", (e) => {
+          if(e.key === "Enter" || e.key === " "){ e.preventDefault(); open(); }
+        });
+      });
+
+      // Modal close
+      $("#modalClose").addEventListener("click", closeModal);
+      $("#modal").addEventListener("click", (e) => { if(e.target.id === "modal") closeModal(); });
+      window.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
+
+      // Copy socials
+      $$("[data-copy]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const sel = btn.getAttribute("data-copy");
+          const el = sel ? $(sel) : null;
+          const text = el ? el.textContent.trim() : "";
+          if(text.toLowerCase() === "không có"){
+            toast("GitHub", "Bạn đang để: Không có", "warn", { ttl: 1200 });
+            return;
+          }
+          copyText(text || "(trống)");
+        });
+      });
+
+      // Copy mail
+      $("#copyMail").addEventListener("click", () => copyText($("#mail").textContent.trim()));
+
+      // Search
+      const search = $("#searchInput");
+      search.addEventListener("input", () => filterProjects(search.value));
+
+      // Keyboard shortcuts
+      window.addEventListener("keydown", (e) => {
+        const tag = (document.activeElement?.tagName || "").toLowerCase();
+        const inForm = ["input","textarea"].includes(tag);
+
+        if(!inForm && e.key === "/"){
+          e.preventDefault();
+          search.focus();
+        }
+        if(inForm && e.key === "Escape"){
+          e.preventDefault();
+          document.activeElement.blur();
+          search.value = "";
+          filterProjects("");
+        }
+
+        if(!inForm && (e.key === "t" || e.key === "T")) toggleTheme();
+        if(!inForm && (e.key === "m" || e.key === "M")){
+          const on = localStorage.getItem(musicKey) !== "off";
+          setMusicOn(!on);
+          if(!on) tryPlay();
+        }
+      });
+
+      // Back to top & help
+      const btnTop = $("#btnTop");
+      btnTop.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+
+      const btnHelp = $("#btnHelp");
+      btnHelp.addEventListener("click", () => {
+        openModal("Ghi chú", `
+          <ul>
+            <li><b>T</b>: đổi theme</li>
+            <li><b>M</b>: bật/tắt nhạc</li>
+            <li><b>/</b>: focus ô tìm</li>
+            <li><b>ESC</b>: thoát cửa sổ / reset tìm</li>
+            <li><b>Đổi màu nhẹ</b>: đổi màu nhấn cho cả theme tối & sáng</li>
+          </ul>
+          <p style="margin-top:10px">
+          </p>
+        `);
+      });
+
+      window.addEventListener("scroll", () => { btnTop.hidden = window.scrollY < 220; });
+
+      // Contact form
+      $("#contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = $("#cname").value.trim();
+        const msg = $("#cmsg").value.trim();
+        if(!name || !msg){
+          toast("Thiếu thông tin", "Nhập tên + tin nhắn trước nhé.", "warn", { ttl: 1200 });
+          return;
+        }
+        const pack = `From: ${name}\nMessage: ${msg}\nTo: ${$("#mail").textContent.trim()}`;
+        copyText(pack);
+        toast("Đã copy nội dung", "Bạn dán gửi qua mail/Discord là được.", "ok", { ttl: 1400 });
+        $("#cmsg").value = "";
+      });
+
+      // Images
+      applyImage($("#avatarImg"), $("#avatarFallback"), AVATAR_IMG_URL);
+      applyImage($("#logoImg"), $("#logoFallback"), LOGO_IMG_URL);
+      applyBg($("#quickBg"), QUICK_BG_IMG_URL);
+
+      // Music init
+      setMusicHint();
+      audio.src = MUSIC_URL;
+      audio.loop = true;
+
+      function setVolUI(){
+        const pct = Math.round(audio.volume * 100);
+        volPct.textContent = pct + "%";
+      }
+
+      audio.volume = Number($("#vol").value);
+      setVolUI();
+
+      // Debounced single volume toast (no spam)
+      let volToastTimer = null;
+      vol.addEventListener("input", () => {
+        audio.volume = Number(vol.value);
+        setVolUI();
+        toast("Âm lượng", `${Math.round(audio.volume*100)}%`, "ok", { id:"vol_toast", ttl: 900 });
+
+        clearTimeout(volToastTimer);
+        volToastTimer = setTimeout(() => {
+          toast("Âm lượng", `${Math.round(audio.volume*100)}%`, "ok", { id:"vol_toast", ttl: 900 });
+        }, 220);
+      });
+
+      btnLoop.addEventListener("click", () => {
+        audio.loop = !audio.loop;
+        btnLoop.textContent = audio.loop ? "🔁 ON" : "🔁 OFF";
+        toast("Loop", audio.loop ? "Bật" : "Tắt", "ok", { ttl: 1200 });
+      });
+
+      btnPlay.addEventListener("click", async () => {
+        const on = localStorage.getItem(musicKey) !== "off";
+        if(!on) setMusicOn(true);
+        if(audio.paused) await tryPlay();
+        else { audio.pause(); setMusicUi(); toast("Nhạc", "Tạm dừng", "ok", { ttl: 1200 }); }
+      });
+
+      $("#btnMusic").addEventListener("click", async () => {
+        const on = localStorage.getItem(musicKey) !== "off";
+        setMusicOn(!on);
+        if(!on) await tryPlay();
+        else toast("Nhạc", "Đã tắt", "ok", { ttl: 1200 });
+      });
+
+      audio.addEventListener("play", setMusicUi);
+      audio.addEventListener("pause", setMusicUi);
+      audio.addEventListener("ended", setMusicUi);
+
+      const musicOn = localStorage.getItem(musicKey) !== "off";
+      setMusicUi();
+
+      if(TRY_AUTOPLAY_ON_LOAD && musicOn){
+        setTimeout(() => tryPlay(), 350);
+      }else if(!musicOn){
+        musicState.textContent = "đang tắt";
+      }
+
+      // No loud intro toast (keep quiet)
+    })();
+  </script>
+</body>
+</html>
